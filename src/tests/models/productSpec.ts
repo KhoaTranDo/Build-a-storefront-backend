@@ -3,6 +3,11 @@ import { ProductModel } from "../../models/product";
 const product = new ProductModel()
 
 describe("Product Model", () => {
+    let product_id :string
+    beforeAll(async ()=>{
+        const result = await product.create(productTest.name,productTest.price)
+        product_id = result.id.toString()
+    })
     const productTest = {
         "id": 1,
         "name": "product01",
@@ -31,7 +36,7 @@ describe("Product Model", () => {
     })
 
     it('show method should return a list of product', async () => {
-        const result = await product.show("1")
+        const result = await product.show(product_id)
         expect(result.name).toEqual(productTest.name)
         expect(result.price).toEqual(productTest.price)
     })

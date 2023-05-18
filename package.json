@@ -6,9 +6,8 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "set ENV=test&& db-migrate --env test up && jasmine-ts && db-migrate db:drop test",
-    "tsc": "tsc",
-    "migrate-test": "set ENV=test&& db-migrate --env test up && db-migrate db:drop test"
+    "test": "set ENV=test&& db-migrate --env test up && jasmine-ts && db-migrate --env test reset",
+    "tsc": "tsc"
   },
   "author": "Khoatran",
   "license": "ISC",
