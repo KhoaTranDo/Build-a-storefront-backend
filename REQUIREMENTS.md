@@ -16,10 +16,9 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Create /user/create [POST] [token required]
 
 #### Orders
-- [ADD] index /order [GET] [token required]
-- [ADD] Create /order [POST] [token required]
-- Current Order by user (args: user id) /order/:user_id [token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- Index /order [GET] [token required]
+- Create /order [POST] [token required]
+- Current Order by user (args: user id) /order/:user_id [GET]  [token required]
 
 ## Data Shapes
 #### Product
