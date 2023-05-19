@@ -4,6 +4,10 @@
 Install all packages using in this project
 - 'yarn' or 'npm install'
 
+## POST Database and Server
+- database: 5432
+- server: 3000
+
 ## Setup ENV
 - Add file '.env' into root folder
 ```

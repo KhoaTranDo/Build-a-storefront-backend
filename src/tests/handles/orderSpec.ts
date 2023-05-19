@@ -24,7 +24,7 @@ describe("Test endpoint order", () => {
         "name": "product01",
         "price": 1000
     }
-    let token: string, user_id: string, product_id: string
+    let token: string, user_id: string, product_id: string, order_id: string
 
     beforeAll(async () => {
         const result = await user.create(userTest.firstname, userTest.lastname, userTest.password)
@@ -40,7 +40,7 @@ describe("Test endpoint order", () => {
                 console.log(err)
             })
         product_id = (await product.create(productTest.name, productTest.price)).id.toString()
-        await order.create(user_id, product_id, orderTest.quantity, orderTest.status)
+        order_id = (await order.create(user_id, orderTest.status)).id.toString()
     })
     it('test no token authorized endpoint [GET] /order', async () => {
         const result = await report(app).get(`/order/`)
@@ -72,15 +72,26 @@ describe("Test endpoint order", () => {
 
     it('test endpoint [POST] /order', async () => {
         const result = await report(app).post(`/order`).set('Authorization', `Bearer ${token}`)
-        .send({
-            'product_id': product_id,
-            'user_id': user_id,
-            'quantity':orderTest.quantity,
-            'status':orderTest.status
+            .send({
+                'user_id': user_id,
+                'status': orderTest.status
+            })
+            expect(result.statusCode).toEqual(200)
+        });
 
-        })
+    it('test endpoint [GET] /order/detail/:order_id', async () => {
+        const result = await report(app).get(`/order/detail/${order_id}`).set('Authorization', `Bearer ${token}`)
+        expect(result.statusCode).toEqual(200)
+    });
+
+    it('test endpoint [POST] /order', async () => {
+        const result = await report(app).post(`/order/add_product`).set('Authorization', `Bearer ${token}`)
+            .send({
+                "order_id": order_id,
+                "product_id": product_id,
+                "quantity": 1000
+            })
         expect(result.body.product_id).toEqual(product_id)
-        expect(result.body.user_id).toEqual(user_id)
     });
 
 })

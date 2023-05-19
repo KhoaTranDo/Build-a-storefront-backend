@@ -13,8 +13,6 @@ const {
 
 let client
 
-
-console.log(ENV)
 if(ENV ==="test"){
     client = new pg.Pool({
         host: POSTGRES_HOST,

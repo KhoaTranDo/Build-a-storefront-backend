@@ -8,17 +8,42 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Index /product [GET]
 - Show /product/:id [GET]
 - Create /product/create [POST] [token required]
+    body: {
+        "name": string,
+        "price": number
+    }
 
 #### Users
 - Index /user [GET] [token required]
 - Show /user/:id [GET] [token required]
 - Get-token /user/get-token [POST]
+    body: {
+        "firstname": string,
+        "lastname": string,
+        "password": string
+    }
 - Create /user/create [POST] [token required]
+    body: {
+        "firstname": string,
+        "lastname": string,
+        "password": string
+    }
 
 #### Orders
 - Index /order [GET] [token required]
 - Create /order [POST] [token required]
+    body: {
+        "user_id": number,
+        "status": string  ['active','complete']
+    }
 - Current Order by user (args: user id) /order/:user_id [GET]  [token required]
+- [ADD] /detail/:order_id [GET] [token required]
+- [ADD] /detail/add_product [POST] [token required]
+    body: {
+        "order_id": number,
+        "product_id": number,
+        "quantity": number
+    }
 
 ## Data Shapes
 #### Product
@@ -38,11 +63,18 @@ Table products (id serial primary key, firstname varchar(255) not null, lastname
 ```
 #### Orders
 - id
-- id of each product in the order
-- quantity of each product in the order
 - user_id
-- status of order (active or complete)
+- status
 
 ```
-Table Orders (id serial primary key, product_id bigint not null [foreign key to products table], quantity integer not null, user_id bigint not null [foreign key to users table], status boolean not null)
+Table orders (id serial primary key, user_id bigint not null [foreign key to users table], status boolean not null)
+```
+#### Product Orders
+- id
+- order_id
+- product_id
+- quantity 
+
+```
+Table product_order (id serial primary key, product_id bigint not null [foreign key to products table], quanlity interger not null,order_id bigint not null [foreign key to orders table])
 ```

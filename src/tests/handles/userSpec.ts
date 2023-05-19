@@ -39,7 +39,6 @@ describe("Test endpoint user", () => {
     });
 
     it('test endpoint [GET] /user', async () => {
-        console.log(token)
         const result = await report(app).get(`/user/`).set('Authorization', `Bearer ${token}`)
         expect(result.statusCode).toEqual(200)
     });
